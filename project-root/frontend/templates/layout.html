@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Stock Up</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+    </head>
+    <body>
+
+        <div class="ui secondary  menu">
+            <a href="/" class="item active">
+              Browse
+            </a>
+            <a href="/strategies"class="item">
+              Strategies
+            </a>
+            <a href="/portfolio"class="item">
+              Portfolio
+            </a>
+            <a href="/orders"class="item">
+              Order History
+            </a>
+            <div class="right menu">
+              <div class="item">
+                <div class="ui icon input">
+                  <input type="text" placeholder="Search...">
+                  <i class="search link icon"></i>
+                </div>
+              </div>
+              <a class="ui item">
+                Logout
+              </a>
+            </div>
+        </div>
+        
+        <div class="ui container">
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+ <h1><a href="/">Stocks</a>
+    <i class="angle double right icon"></i>
+    {{ stock.name }}
+    ({{ stock.symbol }})
+ </h1>
+ 
+ 
+  <div class="tradingview-widget-container" style="height:100%;width:100%">
+   <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+   <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+   {
+    "autosize": true,
+    "symbol": "{% if stock.exchange == 'ARCA' %}AMEX{% else %}{{ stock.exchange }}{% endif %}:{{ stock.symbol }}",
+    "interval": "D",
+    "timezone": "America/New_York",
+    "theme": "dark",
+    "style": "0",
+    "locale": "en",
+    "enable_publishing": false,
+    "allow_symbol_change": true,
+    "calendar": false,
+    "support_host": "https://www.tradingview.com"
+   }
+   </script>
+  </div>
+
+  <form method="post" action="/apply_strategy">
+    <select name="strategy_id">
+      {% for strategy in strategies %}
+       <option value="{{ strategy.id }}">{{ strategy.name }}</option>
+      {% endfor %}
+
+    </select>
+    <input type="hidden" name="stock_id" value="{{ stock.id }}" />
+    <input type="submit" value="Apply Strategy" />
+  </form>
+
+ <h2>Prices</h2>
+ <table class="ui selectable inverted table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Open</th>
+        <th>High</th>
+        <th>Low</th>
+        <th>Close</th>
+        <th>Volume</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for bar in bars %}
+        <tr>
+            <td>{{ bar.date }}</td>
+            <td>{{ bar.open }}</td>
+            <td>{{ bar.high }}</td>
+            <td>{{ bar.low }}</td>
+            <td>{{ bar.close }}</td>
+            <td>{{ bar.volume }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+ </table>
+
+ {% endblock %}
